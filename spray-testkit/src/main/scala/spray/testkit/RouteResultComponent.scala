@@ -61,6 +61,10 @@ trait RouteResultComponent {
           case HttpMessagePartWrapper(ChunkedMessageEnd(extension, trailer), _) ⇒
             synchronized { _closingExtension = extension; _trailer = trailer }
             latch.countDown()
+          case SetRequestTimeout(_) =>
+            // NOOP
+          case SetTimeoutTimeout(_) =>
+            // NOOP
           case Status.Failure(error) ⇒
             sys.error("Route produced exception: " + error)
           case x ⇒
